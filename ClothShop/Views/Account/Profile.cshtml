@@ -1,0 +1,43 @@
+﻿@model AppUser
+
+
+<h1>Профиль!</h1>
+<section class="profile">
+    <div class="account-info">
+        <h2>@Model.Email</h2>
+        <div >
+            @if (@Model.ProfileImageUrl == null)
+            {
+                <p>Загрузите ваше фото!</p>
+                <img src="http://placehold.it/200x200/" alt="" />
+            }
+            else
+            {
+                <img class="avatar" src="@Model.ProfileImageUrl" alt="" />
+            }
+        </div>
+        <p>
+            Ваш баланс:
+            @if (@Model.Cash == null)
+            {
+                <a>0</a>
+            }
+            else
+            {
+                <a>@Model.Cash</a>
+            }
+            руб.
+        </p>
+        <div>
+        <p>Ваш адрес: </p>
+        <p>Область: @Model.Region</p>
+        <p>Город: @Model.City</p>
+        <p>Улица: @Model.Street</p>
+        <p>Номер дома: @Model.HouseNumber</p>
+        </div>
+    </div>
+    <div>
+        
+ <a class="nav-link text-light btn btn-primary" asp-area="" asp-controller="Account" asp-action="Edit">Редактировать профиль</a>
+    </div>
+</section>    

@@ -1,0 +1,51 @@
+﻿@using ClothShop.ViewModels;
+
+@model EditAccountVM
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" value="AddressId" id="AddressId" />
+    <div class="form-group">
+        <label asp-for="UserName">Имя</label>
+        <input asp-for="UserName" class="form-control" placeholder="Имя">
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Region">Область</label>
+        <input asp-for="Region" class="form-control" placeholder="Область">
+        <span asp-validation-for="Region" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="City">Город</label>
+        <input asp-for="City" class="form-control" placeholder="Город">
+        <span asp-validation-for="Street" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Street">Улица</label>
+        <input asp-for="Street" class="form-control" placeholder="Улица">
+        <span asp-validation-for="Street" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="HouseNumber">Номер дома</label>
+        <input asp-for="HouseNumber" class="form-control" placeholder="Номер дома">
+        <span asp-validation-for="HouseNumber" class="text-danger"></span>
+    </div>
+    @if (User.IsInRole("admin"))
+    {
+        <div class="form-group">
+            <label asp-for="Cash">Счет</label>
+            <input asp-for="Cash" class="form-control" placeholder="Счет">
+            <span asp-validation-for="Cash" class="text-danger"></span>
+        </div>
+    }
+    <div class="form-group">
+        <label asp-for="Image">Фото профиля</label>
+        <input asp-for="Image" type="file" class="form-control" placeholder="Фото профиля">
+        <span asp-validation-for="Image" class="text-danger"></span>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

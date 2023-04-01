@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/catalog.css" />
+    <title>@ViewData["Title"] - ClothShop</title>
+</head>
+<body>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1>Вы успешно вошли в аккаунт!</h1>
+    }
+    else
+    {
+        <div style="width:50%;">
+            <h1>Войдите в аккаунт!</h1>
+            <ul class="flexbox">
+                <li class="nav-item">
+                    <a class="nav-link login-button element-shadow" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link register-button element-shadow" asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+                </li>
+            </ul>
+        </div>
+    }
+
+    <div class="catalog">
+                
+        <h2><a asp-area="" asp-controller="Catalog" asp-action="Index"><b>Каталог</b></a> </h2>
+        <ul>
+            <li class="catalog-element">
+                <a asp-area=""  asp-controller="Catalog" asp-action="Cases">Корпусы</a>
+            </li>
+            <li class="catalog-element">
+                <a href="">
+                    Материнские платы
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="">Видеокарты</a>
+            </li>
+            <li class="catalog-element">
+                <a href="">
+                    Процессоры
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="">
+                    Оперативная память
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="">
+                    Блоки питания
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="">
+                    Кулеры
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="">
+                    Периферия
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>

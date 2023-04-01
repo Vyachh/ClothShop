@@ -1,0 +1,25 @@
+﻿body {
+}
+
+.catalog {
+    border: none;
+    padding: 10px 20px;
+    width: 200px;
+    color: #333;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out; /* добавляем плавный переход при наведении */
+}
+
+.catalog-element {
+    transition: all 0.3s ease-in-out; /* добавляем плавный переход при наведении */
+    border-radius: 10px;
+    width: fit-content;
+    padding: 0 5px;
+}
+
+    .catalog-element:hover {
+        background-color: #f5f5f5; /* изменяем фоновый цвет при наведении */
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* изменяем тень блока при наведении */
+        transform: translateX(5px); /* сдвигаем элемент вправо на 10 пикселей */
+    }
