@@ -11,9 +11,9 @@ namespace ClothShop.Controllers
         {
             _itemRepository = itemRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var items = _itemRepository.GetAllItems();
+            var items = await _itemRepository.GetAllItems();
             return View(items);
         }
 

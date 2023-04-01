@@ -14,6 +14,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/catalog.css" />
+    <link rel="stylesheet" href="~/css/homeIndex.css" />
     <title>@ViewData["Title"] - ClothShop</title>
 </head>
 <body>
@@ -36,7 +37,7 @@
             </ul>
         </div>
     }
-
+    <div class="home-container">
     <div class="catalog">
                 
         <h2><a asp-area="" asp-controller="Catalog" asp-action="Index"><b>Каталог</b></a> </h2>
@@ -78,6 +79,18 @@
                 </a>
             </li>
         </ul>
+    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="account-tools catalog">
+            <h2><b>Инструменты</b></h2>
+            @if (User.IsInRole("admin"))
+            {
+                <a href=""> Создать карточку товара </a>
+            }
+        </div>
+
+    }
     </div>
 
 </body>
