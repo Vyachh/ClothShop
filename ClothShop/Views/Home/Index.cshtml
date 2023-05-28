@@ -1,7 +1,11 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using ClothShop.ViewModels;
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.JSInterop;
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
+
+@model AccountVM
 
 @{
     var currentUser = await UserManager.GetUserAsync(User);
@@ -38,60 +42,100 @@
         </div>
     }
     <div class="home-container">
-    <div class="catalog">
-                
-        <h2><a asp-area="" asp-controller="Catalog" asp-action="Index"><b>Каталог</b></a> </h2>
-        <ul>
-            <li class="catalog-element">
-                <a asp-area=""  asp-controller="Catalog" asp-action="Cases">Корпусы</a>
-            </li>
-            <li class="catalog-element">
-                <a href="">
-                    Материнские платы
-                </a>
-            </li>
-            <li class="catalog-element">
-                <a href="">Видеокарты</a>
-            </li>
-            <li class="catalog-element">
-                <a href="">
-                    Процессоры
-                </a>
-            </li>
-            <li class="catalog-element">
-                <a href="">
-                    Оперативная память
-                </a>
-            </li>
-            <li class="catalog-element">
-                <a href="">
-                    Блоки питания
-                </a>
-            </li>
-            <li class="catalog-element">
-                <a href="">
-                    Кулеры
-                </a>
-            </li>
-            <li class="catalog-element">
-                <a href="">
-                    Периферия
-                </a>
-            </li>
-        </ul>
-    </div>
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <div class="account-tools catalog">
-            <h2><b>Инструменты</b></h2>
-            @if (User.IsInRole("admin"))
+        <div class="catalog element-shadow-no-hover">
+            <h2><a asp-area="" asp-controller="Catalog" asp-action="Index"><b>Каталог</b></a> </h2>
+            <ul>
+                <li class="catalog-element">
+                    <a href="" data-id="0">Корпусы</a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="1">
+                        Материнские платы
+                    </a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="2">Видеокарты</a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="3">
+                        Процессоры
+                    </a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="4">
+                        Оперативная память
+                    </a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="5">
+                        Блоки питания
+                    </a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="6">
+                        Кулеры
+                    </a>
+                </li>
+                <li class="catalog-element">
+                    <a href="" data-id="7">
+                        Периферия
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="goods-list element-shadow-no-hover">
+            <h2>Список товаров:</h2>
+            <div class="grid-container">
+                @foreach (var item in Model.Goods)
+                {
+                    <div class="grid-item ">
+                        <div class="card g-item-img ">
+                            <img src="@item.Image" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text">Цена: @item.Price руб.</p>
+                                <div class="btn-group" role="group">
+                                    <a type="button" name="id" asp-route-id="@item.Id" class="btn btn-primary btn-shadow-no-hover" asp-action="ItemInfo" asp-controller="Catalog">Подробнее</a>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <a type="button" asp-route-id="@item.Id" class="btn btn-primary btn-shadow-no-hover" asp-area="" asp-controller="Cart" asp-action="AddToCart">В корзину</a>
+                                    }
+                                </div>
+                                <p class="card-text gray-text">@item.Category</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (!SignInManager.IsSignedIn(User))
             {
-                <a href=""> Создать карточку товара </a>
+                <div id="notification" class="notification">Для добавления товара в корзину нужно <a asp-controller="Account" asp-action="Login">войти на сайт</a>.</div>
             }
+
         </div>
 
-    }
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="account-tools catalog element-shadow-no-hover">
+                <h2><b>Инструменты</b></h2>
+                @if (User.IsInRole("admin"))
+                {
+                    <a asp-for="" asp-action="CreateItem" asp-controller="Catalog" class="catalog-element"> Создать карточку товара </a>
+                }
+            </div>
+        }
     </div>
+    <script>
+        const categoryLinks = document.querySelectorAll('.catalog-element a');
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const categoryId = link.dataset.id;
+                window.location.href = `/Catalog/Product?categoryId=${categoryId}`;
+            });
+        });
+    </script>
+
 
 </body>
 </html>

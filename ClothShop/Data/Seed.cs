@@ -1,4 +1,5 @@
 ﻿using ClothShop.Models;
+using ClothShop.Models.Catalog;
 using Microsoft.AspNetCore.Identity;
 
 namespace ClothShop.Data
@@ -7,6 +8,31 @@ namespace ClothShop.Data
     {
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationBuilder)
         {
+            //using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            //{
+            //    //Items
+            //    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+            //    var item = new Item()
+            //    {
+            //        Id = "0",
+            //        UserId = "1da45101-2152-423c-b82d-e08ad7d77a94",
+            //        Name = "Кейс за писот",
+            //        Image = "https://res.cloudinary.com/ddfsfpulm/image/upload/v1682091350/hk5k4uu9qc099gocwhvy.jpg",
+            //        Price = 500,
+            //        Description = "Case",
+            //        Quantity = 1,
+            //        SizeFeatures = new Size() {
+            //            Width = 100,
+            //            Height = 100,
+            //            Depth = 100,
+            //            Id = 0
+            //        },
+            //        Category = Enum.Category.Case
+            //   };
+            //    await userManager.AddAsync(item);
+            //}
+
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 //Roles

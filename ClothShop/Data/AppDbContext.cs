@@ -1,4 +1,5 @@
 ﻿using ClothShop.Models;
+using ClothShop.Models.CartAssembly;
 using ClothShop.Models.Catalog;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace ClothShop.Data
 
         }
         public DbSet<Item> Items { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Address> Addresses { get; set; }
     }
 }

@@ -1,0 +1,85 @@
+﻿@using ClothShop.Models.Catalog;
+@using ClothShop.Enum;
+@using ClothShop.ViewModels;
+@using Microsoft.AspNetCore.Identity;
+
+@model ItemVM
+@inject SignInManager<AppUser> SignInManager
+
+<body>
+    <link rel="stylesheet" href="~/css/catalog.css" />
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+    {
+        <form method="post" asp-action="CreateItem" enctype="multipart/form-data" class="element-shadow-no-hover justify-content-center ">
+            <input type="hidden" value="@Model.Id" name="Id" id="Id" />
+            <input type="hidden" value="@Model.UserId" name="UserId" id="UserId" />
+            <div class="item-container d-flex justify-content-center ">
+                <div class="inputs main-inputs element-shadow-no-hover mx-3">
+                    <h4>Основные параметры:</h4>
+                    <div class="form-group">
+                        <label asp-for="Name">Название товара</label>
+                        <input asp-for="Name" class="form-control element-shadow-no-hover" placeholder="Название товара">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price">Цена</label>
+                        <input asp-for="Price" class="form-control element-shadow-no-hover" placeholder="Цена">
+                        <span asp-validation-for="Price" class="text-danger" data-val="true" data-val-required="The Название товара field is required."></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description">Описание товара</label>
+                        <input asp-for="Description" class="form-control element-shadow-no-hover" placeholder="Описание товара">
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="inputs size-inputs element-shadow-no-hover mx-3">
+                    <h4>Размер:</h4>
+                    <div class="form-group">
+                        <label asp-for="SizeFeatures.Width">Ширина</label>
+                        <input asp-for="SizeFeatures.Width" class="form-control element-shadow-no-hover" placeholder="Ширина">
+                        <span asp-validation-for="SizeFeatures.Width" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SizeFeatures.Height">Высота</label>
+                        <input asp-for="SizeFeatures.Height" class="form-control element-shadow-no-hover" placeholder="Высота">
+                        <span asp-validation-for="SizeFeatures.Height" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SizeFeatures.Depth">Глубина</label>
+                        <input asp-for="SizeFeatures.Depth" class="form-control element-shadow-no-hover" placeholder="Глубина">
+                        <span asp-validation-for="SizeFeatures.Depth" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="inputs other-inputs element-shadow-no-hover mx-3">
+                    <h4>Другое:</h4>
+                    <div class="form-group ">
+                        <label asp-for="Category">Категория</label>
+                        @Html.DropDownList("Category", Enum.GetValues(typeof(Category)).Cast<Category>
+                    ().Select(e => new SelectListItem { Text = e.ToString(), Value = ((int)e).ToString() }), new { @class = "form-control element-shadow-no-hover" })
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Image">Фото товара</label>
+                        <input asp-for="Image" type="file" class="form-control element-shadow-no-hover" placeholder="Фото товара">
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Quantity">Количество товара</label>
+                        <input asp-for="Quantity" class="form-control element-shadow-no-hover" placeholder="Количество товара">
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary element-shadow" style="color:white">Подтвердить</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <h1>У вас нет доступа к данной странице.</h1>
+        <small>А ну выйди.</small>
+    }
+
+</body>

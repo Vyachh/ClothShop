@@ -1,0 +1,87 @@
+﻿@using ClothShop.ViewModels;
+
+@model ItemInfoVM
+
+<div class="home-container">
+    <link rel="stylesheet" href="/css/homeIndex.css" />
+    <link rel="stylesheet" href="/css/itemInfo.css" />
+    <div class="catalog element-shadow-no-hover">
+        <h2><a asp-area="" asp-controller="Catalog" asp-action="Index"><b>Каталог</b></a> </h2>
+        <ul>
+            <li class="catalog-element">
+                <a href="" data-id="0">Корпусы</a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="1">
+                    Материнские платы
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="2">Видеокарты</a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="3">
+                    Процессоры
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="4">
+                    Оперативная память
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="5">
+                    Блоки питания
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="6">
+                    Кулеры
+                </a>
+            </li>
+            <li class="catalog-element">
+                <a href="" data-id="7">
+                    Периферия
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="element-shadow-no-hover item-info">
+        <img src="@Model.Image" class="card-img-top image" alt="..." />
+        <div class="item-text">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">Цена: @Model.Price руб.</p>
+            <div class="size">
+                <p>Ширина: @Model.SizeFeatures.Width</p>
+                <p>Высота: @Model.SizeFeatures.Height</p>
+                <p>Длина:  @Model.SizeFeatures.Depth</p>
+            </div>
+            
+        </div>
+        <div class="add">
+            <p class="card-text gray-text">@Model.Category</p>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a type="button" asp-route-id="@Model.Id" class="btn btn-primary btn-shadow-no-hover" asp-area="" asp-controller="Cart" asp-action="AddToCart">В корзину</a>
+            }
+            else
+            {
+                <a class="element-shadow login-button" asp-controller="Account" asp-action="Login">Вход</a>
+            }
+        </div>
+    
+
+    </div>
+
+
+    <script>
+        const categoryLinks = document.querySelectorAll('.catalog-element a');
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const categoryId = link.dataset.id;
+                window.location.href = `/Catalog/Product?categoryId=${categoryId}`;
+            });
+        });
+    </script>
+</div>

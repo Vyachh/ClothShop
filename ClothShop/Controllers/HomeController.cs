@@ -1,4 +1,6 @@
-﻿using ClothShop.Models;
+﻿using ClothShop.Interface;
+using ClothShop.Models;
+using ClothShop.Repository;
 using ClothShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +11,12 @@ namespace ClothShop.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IItemRepository _itemRepository;
 
-        public HomeController(UserManager<AppUser> userManager)
+        public HomeController(UserManager<AppUser> userManager, IItemRepository itemRepository )
         {
             _userManager = userManager;
+            _itemRepository = itemRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -21,14 +25,20 @@ namespace ClothShop.Controllers
             var curUser = await _userManager.GetUserAsync(User);
             if (curUser != null)
             {
+
                 var model = new AccountVM
                 {
                     Id = curUser.Id,
-                    Cash = curUser.Cash
+                    Cash = curUser.Cash,
+                    Goods = await _itemRepository.GetProducts()
                 };
                 return View(model);
             }
-            return View();
+            var modelNoUser = new AccountVM
+            {
+                Goods = await _itemRepository.GetProducts()
+            };
+            return View(modelNoUser);
         }
 
         public async Task<IActionResult> Privacy()

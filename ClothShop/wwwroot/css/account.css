@@ -1,0 +1,9 @@
+﻿.title{
+    text-align:center;
+    font-size:50px;
+}
+.form-group {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

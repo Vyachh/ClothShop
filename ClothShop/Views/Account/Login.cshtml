@@ -4,10 +4,14 @@
 @{
     ViewData["Title"] = "Login";
 }
-<div class="row">
+<head>
+    <link rel="stylesheet" href="~/css/account.css" />
+
+</head>
+<div class="row element-shadow-no-hover">
     <div class="col-md-6 offset-3">
-        <p>
-            <h4>Войдите в аккаунт!</h4>
+        <p class="title">
+            Войдите в аккаунт!
         </p>
         @if (TempData["Error"] != null)
         {
@@ -21,19 +25,20 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="EmailAddress" class="control-label">Электронная почта</label>
-                        <input asp-for="EmailAddress" class="form-control">
+                        <input asp-for="EmailAddress" class="form-control element-shadow-no-hover">
                         <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Password" class="control-label ">Пароль</label>
-                        <input asp-for="Password" class="form-control" />
+                        <input asp-for="Password" class="form-control element-shadow-no-hover" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float right element-shadow" type="submit" value="Войти" />
-                        <a class="btn btn-outline-secondary element-shadow" asp-controller="Club" asp-action="Index">Отмена</a>
+                    <div class="form-group d-flex justify-content-center">
+                        <input class="btn btn-outline-success mx-3 float right element-shadow" type="submit" value="Войти" />
+                        <a class="btn btn-outline-secondary mx-3 float element-shadow" asp-controller="Home" asp-action="Index">Отмена</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>

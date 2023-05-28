@@ -1,0 +1,18 @@
+﻿body {
+}
+.image{
+    width:400px;
+}
+.item-info{
+    display:flex;
+    width:100%;
+    position:relative;
+}
+.item-text{
+    margin:10px;
+}
+.add {
+  position:absolute;
+  bottom:20px;
+  right:50px;
+}
