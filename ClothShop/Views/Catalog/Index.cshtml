@@ -1,5 +1,89 @@
-﻿<ul>
-@foreach(var item in Model){
-    <li>item.Name</li>
-}
-</ul>
+﻿@using ClothShop.ViewModels
+
+@model ItemListVM
+
+<div class="home-container">
+    <link rel="stylesheet" href="/css/homeIndex.css" />
+<div class="catalog element-shadow-no-hover">
+    <h2><a asp-area="" asp-controller="Catalog" asp-action="Index"><b>Каталог</b></a> </h2>
+    <ul>
+        <li class="catalog-element">
+            <a href="" data-id="0">Корпусы</a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="1">
+                Материнские платы
+            </a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="2">Видеокарты</a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="3">
+                Процессоры
+            </a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="4">
+                Оперативная память
+            </a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="5">
+                Блоки питания
+            </a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="6">
+                Кулеры
+            </a>
+        </li>
+        <li class="catalog-element">
+            <a href="" data-id="7">
+                Периферия
+            </a>
+        </li>
+    </ul>
+</div>
+    <div class="element-shadow-no-hover">
+<h1>Список товаров: </h1>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model.Goods)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@item.Image" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+                    <p class="card-text">Цена: @item.Price руб.</p>
+                    <div class="size">
+                        <p>Ширина: @item.SizeFeatures.Width</p>
+                        <p>Высота: @item.SizeFeatures.Height</p>
+                        <p>Длина:  @item.SizeFeatures.Depth</p>
+                    </div>
+                    <div class="btn-group" role="group" >
+                        <a type="button" name="id" asp-route-id="@item.Id" class="btn btn-primary btn-shadow-no-hover" asp-action="ItemInfo" asp-controller="Catalog">Подробнее</a>
+                        @if (User.Identity.IsAuthenticated)
+                                {
+
+                                    <a type="button" asp-route-id="@item.Id" class="btn btn-primary btn-shadow-no-hover" asp-area="" asp-controller="Cart" asp-action="AddToCart">В корзину</a>
+                                }
+                    </div>
+                    <p class="card-text gray-text">@item.Category</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+    <script>
+        const categoryLinks = document.querySelectorAll('.catalog-element a');
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const categoryId = link.dataset.id;
+                window.location.href = `/Catalog/Product?categoryId=${categoryId}`;
+            });
+        });
+    </script>
+</div>
+</div>

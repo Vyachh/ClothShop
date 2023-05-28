@@ -2,10 +2,13 @@
 {
     public enum Category
     {
+        Case,
         MotherBoard,
         GraphicCard,
         Processor,
         RAM,
-        PowerUnit
+        PowerUnit,
+        Cooler,
+        Peripherals
     }
 }

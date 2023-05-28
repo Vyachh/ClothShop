@@ -1,4 +1,37 @@
 ﻿.home-container {
-    display:flex;
-    justify-content:space-between;
+    display: flex;
+    justify-content: unset;
+}
+.notification {
+    position: fixed;
+    bottom: 7px;
+    right: 20px;
+    background-color: #F44336;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 999;
+    color:#fff;
+}
+    .notification a {
+        color:#fff;
+        transition:all .2s;
+        text-decoration-line:underline;
+    }
+        .notification a:hover {
+            color: #dcdcdc;
+        }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc(100%/4), 1fr));
+    margin-bottom: 50px;
+}
+
+.grid-item{
+    margin:5px;
+}
+
+.account-tools{
+    max-height: 300px;
 }

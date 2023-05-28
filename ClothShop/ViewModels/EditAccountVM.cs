@@ -11,7 +11,7 @@ namespace ClothShop.ViewModels
         //public string? Email { get; set; }
         public IFormFile Image { get; set; }
         public string? Url { get; set; }
-        public int? Cash { get; set; }
+        public decimal? Cash { get; set; }
         [ForeignKey("Address")]
         public int? AddressId { get; set; }
         public Address? Address { get; set; }

@@ -1,13 +1,10 @@
 ﻿using ClothShop.Data;
 using ClothShop.Interface;
 using ClothShop.Models;
-using ClothShop.Services;
 using ClothShop.ViewModels;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace ClothShop.Controllers
 {
@@ -18,7 +15,7 @@ namespace ClothShop.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IPhotoService _photoService;
         private readonly IHttpContextAccessor _contextAccessor;
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -58,6 +55,7 @@ namespace ClothShop.Controllers
                     }
                 }
                 TempData["Error"] = "Не правильный логин или пароль."; // Не желательно употреблять в большом количестве, лучше делать login.PasswordIsCorrect...
+
                 return View(login);
             }
             // Юзверь не нашелся
@@ -85,6 +83,7 @@ namespace ClothShop.Controllers
 
         public async Task<IActionResult> Register(RegisterVM model)
         {
+
             if (!ModelState.IsValid) return View(model);
 
             var user = await _userManager.FindByEmailAsync(model.EmailAddress); // Находим юзверя по мылу
@@ -112,7 +111,7 @@ namespace ClothShop.Controllers
 
             var curUserId = _contextAccessor.HttpContext.User.GetUserId();
             var user = await _userRepository.GetByIdAsyncNoTracking(curUserId);
-            
+
             return View(user);
         }
 
@@ -184,6 +183,7 @@ namespace ClothShop.Controllers
 
         public async Task<ViewResult> InvokeAsync()
         {
+
             return View("AccountInfo", _context.Model);
         }
 

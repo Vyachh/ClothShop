@@ -1,0 +1,103 @@
+﻿@using ClothShop.Controllers;
+@using ClothShop.ViewModels;
+@using Microsoft.AspNetCore.Http;
+
+@model CartNCashVM
+
+
+<div class="cart-container">
+    <link rel="stylesheet" href="~/css/cart.css" />
+    <link rel="stylesheet" href="/css/homeIndex.css" />
+    @*<script src="/js/count.js" defer></script>*@
+    <div class="cart-content">
+
+        @foreach (var item in Model.Cart.CartItems)
+        {
+            var incrementCountId = "count-increment-" + item.Id; // генерируем уникальный идентификатор для поля ввода
+            var decrementCountId = "count-decrement-" + item.Id; // генерируем уникальный идентификатор для поля ввода
+            <div class="cart-item" data-price="@item.Price">
+                <div class="info-container">
+                    <div class="item image-container">
+                        <img src="@item.Image" alt="" class="image-container" />
+                    </div>
+                    <div class="item info">
+                        <div class="item name">@item.ProductName</div>
+                        <div class="item description">@item.Description</div>
+                        <div class="item quantity">Количество на складе: @item.Quantity</div>
+                    </div>
+                </div>
+
+                <div class="item price">@item.Price</div>
+                <div class="count-edit">
+                    <form asp-action="CalculateTotal" asp-controller="Cart">
+
+                        @*<input type="button" value="@incrementCountId" onclick="plusBtn.click();" id="incrementCountIdHidden" />*@
+                        @*<button class="btn counter" name="count" onclick="@Plus()">+</button>*@
+
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="text" value="@item.CartItemCount" name="count" class="item count" id="counter-input" />
+
+                        @* <input type="button" value="@decrementCountId" id="decrementCountIdHidden" />*@
+                        @*<button class="btn counter" value="@decrementCountId" id="@decrementCountId">-</button>*@
+                    </form>
+                </div>
+                <div class="item delete">
+                    <a class="btn btn-outline-danger float right element-shadow" asp-for="" asp-route-id="@item.ProductId" asp-action="RemoveFromCart" asp-controller="Cart">
+                        <img src="/ico/trash-can.png" class="trash-can" alt="" />
+                    </a>
+                </div>
+
+            </div>
+        }
+    </div>
+    @{
+        decimal total = 0;
+        int totalItemsCount = 0;
+        foreach (var item in Model.Cart.CartItems)
+        {
+            total += item.Price * item.CartItemCount;
+            totalItemsCount += item.CartItemCount;
+        }
+        int totalCount = @Model.Cart.CartItems.Count + totalItemsCount;
+    }
+    <div class="cost-info">
+        <h4>Ваша корзина:</h4>
+        <div class="total-count-items">
+            <p>Товары (@totalItemsCount)</p>
+            <p>
+                <b>
+
+                    @total р.
+                </b>
+            </p>
+        </div>
+        <div class="total-count-items">
+            <p>Cкидка </p>
+            <p class="text-danger"><b>0</b></p>
+        </div>
+        <div class="total-count-items">
+            <p><b>Общая стоимость:</b></p>
+
+            <p class="text-success" id="total-price"><b>@total р.</b></p>
+
+        </div>
+        <form method="post" asp-action="MakeDeal" asp-controller="Cart">
+            <div class="buy-container">
+                <input type="hidden" name="total" value="@total" />
+                <button id="MakeDeal" type="submit" class="btn btn-outline-success element-shadow btn-buy">Купить</button>
+            </div>
+
+            <script>
+                var myButton = document.getElementById("MakeDeal");
+                if (@Model.Cart.CartItems.Count == 0) {
+                    myButton.classList.add("disabled")
+                }
+            </script>
+        </form>
+        @if (total > Model.Cash)
+        {
+            <div id="notification" class="notification">Не хватает денег на счету.</div>
+        }
+    </div>
+
+</div>

@@ -4,18 +4,22 @@
 @{
     ViewData["Title"] = "Sign up";
 }
+
+<head>
+    <link rel="stylesheet" href="~/css/account.css"/>
+</head>
 <div class="row">
-    <div class="col-md-6 offset-3">
-        <p>
-            <h4>Sign up for a new account</h4>
+    <div class="col-md-6 offset-3 element-shadow-no-hover">
+        <p class="title">
+            Регистрация
         </p>
 
         @if (TempData["Error"] != null)
         {
-            
-            <div class="col-md-12 alert alert-danger">
-                <span><b>Sorry!</b> - @TempData["Error"] </span>
-            </div>
+
+                <div class="col-md-12 alert alert-danger">
+                    <span><b>Sorry!</b> - @TempData["Error"] </span>
+                </div>
         }
 
         <div class="row">
@@ -24,24 +28,25 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="form-group">
-                        <label asp-for="EmailAddress" class="control-label"></label>
-                        <input asp-for="EmailAddress" class="form-control" />
+                        <label asp-for="EmailAddress" class="control-label">Электронная почта</label>
+                        <input asp-for="EmailAddress" class="form-control element-shadow-no-hover"  />
                         <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" />
+                        <label asp-for="Password" class="control-label">Пароль</label>
+                        <input asp-for="Password" class="form-control element-shadow-no-hover" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <label asp-for="ConfirmPassword" class="control-label">Подтвердите пароль</label>
+                        <input asp-for="ConfirmPassword" class="form-control element-shadow-no-hover" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group">
-                        <input class="btn btn-outline-success float-right" type="submit" value="Sign up" />
-                        <a class="btn btn-outline-secondary" asp-controller="Race" asp-action="Index">Cancel</a>
+                    <div class="form-group d-flex justify-content-center">
+                        <input class="btn btn-outline-success mx-3 float element-shadow" type="submit" value="Зарегистрироваться" />
+                        <a class="btn btn-outline-secondary mx-3 float element-shadow" asp-controller="Home" asp-action="Index">Отмена</a>
+
                     </div>
                 </form>
             </div>

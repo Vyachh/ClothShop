@@ -8,9 +8,11 @@ namespace ClothShop.Repository
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _dbContext;
-        public UserRepository(AppDbContext context)
+        private readonly IHttpContextAccessor _contextAccessor;
+        public UserRepository(AppDbContext context, IHttpContextAccessor contextAccessor)
         {
             _dbContext = context;
+            _contextAccessor = contextAccessor;
         }
         public bool Add(AppUser user)
         {
@@ -32,9 +34,16 @@ namespace ClothShop.Repository
             return await _dbContext.Users.Where(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync();
         }
 
-        public Task<AppUser> GetUserById(string id)
+        public async Task<AppUser> GetUserById(string id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<AppUser> GetUser()
+        {
+            var userId = _contextAccessor.HttpContext.User.GetUserId();
+            var user = await GetByIdAsyncNoTracking(userId);
+            return user;
         }
 
         public bool Update(AppUser user)
@@ -45,7 +54,7 @@ namespace ClothShop.Repository
         public bool Save()
         {
             var saved = _dbContext.SaveChanges();
-            return saved > 0 ? true : false;
+            return saved > 0;
         }
     }
 }
